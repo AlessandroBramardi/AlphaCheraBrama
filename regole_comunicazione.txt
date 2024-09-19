@@ -1,0 +1,16 @@
+server -> robot
+client -> nostri pc
+
+client richiede a robot movimento e robot risponde in base alla richiesta 
+
+f"{command}|{valore}"
+
+
+risposte:
+
+f"{status}|{phrase}"
+
+
+forward, backward, left, right
+
+status: ok|error
