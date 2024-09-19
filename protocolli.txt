@@ -1,0 +1,23 @@
+richieste 
+    -> client a server
+    struttura messaggio
+        -> comando | value[tempo, distanza]  
+
+risposte
+    -> server a client
+    struttura messaggio
+        -> stato | frase esplicativa dell' errore{es. comando non riconosciuto}
+
+client[computer]
+server[robot]
+
+command
+    forward
+    backward
+    left
+    right
+
+status
+    ok
+    error
+    warning
