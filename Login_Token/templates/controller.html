@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaBot Controller</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .controller {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+        }
+        .button {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .up {
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        .left {
+            top: 50%;
+            left: 0;
+            transform: translate(0, -50%);
+        }
+        .right {
+            top: 50%;
+            right: 0;
+            transform: translate(0, -50%);
+        }
+        .down {
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        .stop {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #dc3545;
+        }
+        .stop:hover {
+            background-color: #a71d2a;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #ffc107;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <div class="controller">
+        
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+
+        
+        <button class="button up" onclick="sendCommand('forward')">Avanti</button>
+        <button class="button left" onclick="sendCommand('left')">Sinistra</button>
+        <button class="button right" onclick="sendCommand('right')">Destra</button>
+        <button class="button down" onclick="sendCommand('backward')">Indietro</button>
+        <button class="button stop" onclick="sendCommand('stop')">Stop</button>
+    </div>
+
+    <script>
+        function sendCommand(command) {
+            fetch("/command", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ command: command })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nella risposta del server');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Successo:', data);
+            })
+            .catch(error => {
+                console.error('Errore durante l\'invio del comando:', error);
+            });
+        }
+    </script>
+</body>
+</html>
